@@ -61,7 +61,7 @@ class movieDataModel{
                 print(error)
             } else {
              
-                print(data)
+                //print(data)
             }
             
             let decoder = JSONDecoder()
@@ -70,42 +70,51 @@ class movieDataModel{
                 let todo = try decoder.decode(OverallDescription.self, from: data!)
                 
                // DispatchQueue.main.async{
-                print(todo.total_results)
-                print(todo.results[0].overview)
-                print(todo.results.count)
+                //print(todo.total_results)
+               // print(todo.results[0].overview)
+                //print(todo.results.count)
                 
                     for index in 0...todo.results.count-1{
-                        print(todo.results[index].genre_ids[0])
+                        //print(todo.results[index].genre_ids[0])
                         if todo.results[index].genre_ids[0] == 28 {
                             self.movieArrayAction.append(todo.results[index])
                             print("Closure and Action!")
+                            print(self.movieArrayAction.count)
                         }
                             //sorting my each chosen genre
                         else if todo.results[index].genre_ids[0] == 878{
                             self.movieArrayScienceFiction.append(todo.results[index])
-                            print("Number of Action Movies")
+                            print("Number of SIFI Movies")
+                            print(self.movieArrayScienceFiction.count)
                         }
                             
                         else if todo.results[index].genre_ids[0] == 35{
                             self.movieArrayComedy.append(todo.results[index])
-                            print("Number of Action Movies")
+                            print("Number of Comedy Movies")
+                            print(self.movieArrayComedy.count)
                         }
                             
                         else if todo.results[index].genre_ids[0] == 10751{
                             self.movieArrayFamily.append(todo.results[index])
-                            print("Number of Action Movies")
+                            print("Number of Family Movies")
+                            print(self.movieArrayFamily.count)
                         }
                             
                         else if todo.results[index].genre_ids[0] == 27{
                             self.movieArrayHorror.append(todo.results[index])
-                            print("Number of Action Movies")
+                            print("Number of Horror Movies")
+                            print(self.movieArrayHorror.count)
                         }
                     }
                    
                 //completionHandler(todo, nil)
             //}
-                print("below is the number of Action movies in the array after the Async")
+                print("below is the number of Action, SIFI, Comedy,Family, Horror movies in the array after the Async")
                 print(self.movieArrayAction.count)
+                print(self.movieArrayScienceFiction.count)
+                print(self.movieArrayComedy.count)
+                print(self.movieArrayFamily.count)
+                print(self.movieArrayHorror.count)
                 
                 //calling escape so that data ends up in Singleton
                 success(self.movieArrayAction, self.movieArrayScienceFiction, self.movieArrayComedy, self.movieArrayFamily, self.movieArrayHorror)
@@ -141,10 +150,26 @@ class movieDataModel{
       return self.movieArrayAction.count
     }
     
-    func movieTitle(random: Int) -> String {
+    func numberOfSiFi() -> Int {
+        return self.movieArrayScienceFiction.count
+    }
+    
+    func numberOfFamily() -> Int {
+        return self.movieArrayFamily.count
+    }
+    
+    func numberOfHorror() -> Int {
+        return self.movieArrayHorror.count
+    }
+    
+    func numberOfComedy() -> Int {
+        return self.movieArrayComedy.count
+    }
+    
+    func movieTitle(Index: Int) -> String {
         var Title: String = " "
-        if(random < movieArrayAction.count-1){
-    Title = movieArrayAction[random].title
+        if(Index < movieArrayAction.count-1){
+    Title = movieArrayAction[Index].title
             
         }
         

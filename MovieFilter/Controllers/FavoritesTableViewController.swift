@@ -36,7 +36,14 @@ class FavoritesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return model.numberOfAction()-1
+        var count: Int = 0
+        count += model.numberOfAction()
+        count += model.numberOfSiFi()
+        count += model.numberOfComedy()
+        count += model.numberOfFamily()
+        count += model.numberOfHorror()
+        
+     return count
     }
 
     
@@ -44,7 +51,7 @@ class FavoritesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         
-        cell.textLabel?.text = model.movieTitle(random: indexPath.row)
+        cell.textLabel?.text = model.movieTitle(Index: indexPath.row)
         cell.detailTextLabel?.text = "Action"
         // Configure the cell...
 
