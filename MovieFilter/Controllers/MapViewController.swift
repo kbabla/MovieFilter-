@@ -86,6 +86,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
         // Dispose of any resources that can be recreated.
     }
     
+    //parsingJSON
+    
     func parseJSON() -> Void {
         var json:JSON
         var data:Data

@@ -44,33 +44,10 @@ class movieDataModel{
         movieArrayHorror = [results]()
         favoritesArray = [results]()
         allMovies = [results]()
-        //calling a parseJSON function in the init so that the singleton is init'd with the parsed data
-       //parseJSON(success: forClosure(closureAction:closureScienceFiction:closureComedy:closureFamily:closureHorror:))
     }
     
-    
- //function parses JSON data using Swift 4 Codable/Decodable feature.  Uses an escape clause add data into Singleton without falling out of scope or due to async behavior
     
     //below are set and get functions for pulling data into Discover and favorites view
-    func numberOfAction() -> Int {
-      return self.movieArrayAction.count
-    }
-    
-    func numberOfSiFi() -> Int {
-        return self.movieArrayScienceFiction.count
-    }
-    
-    func numberOfFamily() -> Int {
-        return self.movieArrayFamily.count
-    }
-    
-    func numberOfHorror() -> Int {
-        return self.movieArrayHorror.count
-    }
-    
-    func numberOfComedy() -> Int {
-        return self.movieArrayComedy.count
-    }
     func numberOfAllMovies() -> Int {
         return self.allMovies.count
     }
@@ -122,6 +99,8 @@ class movieDataModel{
         
         allMovies[allMovies.count-1].genreTitle = name
     }
+    
+    
     
     func addJSONData(data: OverallDescription) -> Void {
         var genreName: String = " "
