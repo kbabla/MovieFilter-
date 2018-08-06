@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FavoritesTableViewController: UITableViewController {
+class DiscoveryViewController: UITableViewController {
    let model: movieDataModel = movieDataModel.singleton
     override func viewDidLoad() {
         super.viewDidLoad()
