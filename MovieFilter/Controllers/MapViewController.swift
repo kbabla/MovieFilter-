@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import MapKit
+import SwiftyJSON
 
 
 
@@ -24,8 +25,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
 
     
+     let model: movieDataModel = movieDataModel.singleton
     override func viewDidLoad() {
-         let model: movieDataModel = movieDataModel.singleton
+        parseJSON()
         super.viewDidLoad()
         //conform to CLLocationMangerDelegate
         locationManager.delegate = self
@@ -85,7 +87,32 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
     }
     
     func parseJSON() -> Void {
-        <#function body#>
+        var json:JSON
+        var data:Data
+        let file = "https://api.themoviedb.org/3/discover/movie?primary_release_year=2018&page=1&include_video=false&include_adult=false&sort_by=popularity.desc&language=en-US&api_key=ed74e70274d657b728a1a2d317eef7bf"
+        let url = URL(string: file)
+        
+        do{
+            data = try Data(contentsOf: url!)
+            
+            json = try JSON(data: data)
+            let decoder = JSONDecoder()
+        
+            
+        do{
+            let todo = try decoder.decode(OverallDescription.self, from: data)
+            model.addJSONData(data: todo)
+        }
+        
+        catch{
+            print(error)
+        }
+        }
+        catch {
+            print("fail")
+            
+        }
+        
     }
     
 
