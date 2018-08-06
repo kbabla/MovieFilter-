@@ -15,4 +15,6 @@ struct results:Decodable {
     let release_date: String
     let genre_ids: Array<Int>
     let poster_path: String
+    var genreTitle: String?
+    
 }

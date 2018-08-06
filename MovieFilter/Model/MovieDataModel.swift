@@ -26,7 +26,7 @@ class movieDataModel{
     private var movieArrayFamily: [results]
     //27
      private var movieArrayHorror: [results]
-    
+    private var allMovies: [results]
     
     //for favorites
     
@@ -43,6 +43,7 @@ class movieDataModel{
         movieArrayFamily = [results]()
         movieArrayHorror = [results]()
         favoritesArray = [results]()
+        allMovies = [results]()
         //calling a parseJSON function in the init so that the singleton is init'd with the parsed data
        //parseJSON(success: forClosure(closureAction:closureScienceFiction:closureComedy:closureFamily:closureHorror:))
     }
@@ -70,11 +71,14 @@ class movieDataModel{
     func numberOfComedy() -> Int {
         return self.movieArrayComedy.count
     }
+    func numberOfAllMovies() -> Int {
+        return self.allMovies.count
+    }
     
     func movieTitle(Index: Int) -> String {
         var Title: String = " "
-        if(Index < movieArrayAction.count-1){
-    Title = movieArrayAction[Index].title
+        if(Index < allMovies.count-1){
+    Title = allMovies[Index].title
             
         }
         
@@ -82,14 +86,28 @@ class movieDataModel{
         return Title
     }
     
-    func Subtitle(random: Int) -> String {
-        return movieArrayAction[random].release_date
+    func movieGenre(Index: Int) -> String {
+        
+        if(Index < allMovies.count-1){
+        guard let Genre = allMovies[Index].genreTitle else{return "No Genre"}
+            return Genre
+       
+    }
+        else{
+            return "No Genre"
+        }
+        
+    }
+
+    
+    func Subtitle(index: Int) -> String {
+        return movieArrayAction[index].release_date
     }
     
     func getMovieFromArrayToFavorites(index: Int) -> Void {
         
         
-        favoritesArray.append(movieArrayAction[index])
+        favoritesArray.append(allMovies[index])
         
     }
     
@@ -100,8 +118,45 @@ class movieDataModel{
     func favoriteSize() -> Int {
         return favoritesArray.count
     }
+    private func addGenreName(name: String) -> Void {
+        
+        allMovies[allMovies.count-1].genreTitle = name
+    }
     
     func addJSONData(data: OverallDescription) -> Void {
+        var genreName: String = " "
+        for index in 0...data.results.count-1{
+            if data.results[index].genre_ids[0] == 28 {
+            genreName = "Action"
+            allMovies.append(data.results[index])
+            addGenreName(name: genreName)
+            }
+            if data.results[index].genre_ids[0] ==  878{
+                genreName = "Science Fiction"
+                allMovies.append(data.results[index])
+                addGenreName(name: genreName)
+            }
+            
+            if data.results[index].genre_ids[0] ==  35{
+                genreName = "Comedy"
+                allMovies.append(data.results[index])
+                 addGenreName(name: genreName)
+            }
+            if data.results[index].genre_ids[0] ==  10751{
+                genreName = "Family"
+                allMovies.append(data.results[index])
+                 addGenreName(name: genreName)
+            }
+            if data.results[index].genre_ids[0] ==  27{
+                genreName = "Horror"
+                allMovies.append(data.results[index])
+                 addGenreName(name: genreName)
+            }
+            
+            print("size of allMovies array:")
+            print(allMovies.count)
+    
+        }
         
         for index in 0...data.results.count-1{
             //print(todo.results[index].genre_ids[0])

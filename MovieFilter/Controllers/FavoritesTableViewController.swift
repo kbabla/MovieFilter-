@@ -36,14 +36,10 @@ class FavoritesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        var count: Int = 0
-        count += model.numberOfAction()
-        count += model.numberOfSiFi()
-        count += model.numberOfComedy()
-        count += model.numberOfFamily()
-        count += model.numberOfHorror()
+        var count: Int = model.numberOfAllMovies()
+  
         
-     return count
+     return count-1
     }
 
     
@@ -52,7 +48,7 @@ class FavoritesTableViewController: UITableViewController {
         
         
         cell.textLabel?.text = model.movieTitle(Index: indexPath.row)
-        cell.detailTextLabel?.text = "Action"
+        cell.detailTextLabel?.text = model.movieGenre(Index: indexPath.row)
         // Configure the cell...
 
         return cell

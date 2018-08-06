@@ -11,5 +11,5 @@ import Foundation
 struct OverallDescription: Decodable {
     let page: Int
     let total_results: Int
-    let results: [results]
+    var results: [results]
 }

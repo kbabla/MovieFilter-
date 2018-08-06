@@ -44,7 +44,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
          let cell = tableView.dequeueReusableCell(withIdentifier: "CellFavorite", for: indexPath)
         cell.textLabel?.text = model.getFavorites(index: indexPath.row).title
         //genre was not a element of in the JSON data (in string format)... number values assigned to genre and I've seperated them in the data model
-        cell.detailTextLabel?.text = "Action"
+        cell.detailTextLabel?.text = model.getFavorites(index: indexPath.row).genreTitle
         return cell
     }
     
