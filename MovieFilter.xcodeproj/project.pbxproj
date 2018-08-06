@@ -126,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				6BE4D123209B9AF700728A3D /* Main.storyboard */,
+				6BE4D128209B9AFE00728A3D /* LaunchScreen.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -161,7 +162,6 @@
 				6B83C975209CA48B00DB51BC /* Model */,
 				6BE4D12B209B9AFE00728A3D /* Info.plist */,
 				6BE4D126209B9AFE00728A3D /* Assets.xcassets */,
-				6BE4D128209B9AFE00728A3D /* LaunchScreen.storyboard */,
 			);
 			path = MovieFilter;
 			sourceTree = "<group>";
