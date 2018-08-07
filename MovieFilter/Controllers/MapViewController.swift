@@ -11,9 +11,6 @@ import CoreLocation
 import MapKit
 import SwiftyJSON
 
-
-
-
 class MapViewController: UIViewController, CLLocationManagerDelegate  {
 
     @IBOutlet weak var mapView: MKMapView!
@@ -47,12 +44,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //Setting up where the map is in terms of location and scale
         let location = locations.first
-        print(location?.coordinate)
         let center = location?.coordinate
-  
         let region = MKCoordinateRegion(center: center!, span: span)
       
-        
         mapView.setRegion(region, animated: true)
         mapView.showsUserLocation = true
         
@@ -66,13 +60,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
         request.start { (response, _) in
             guard let response = response else {return}
              let movieNearbyArray = response.mapItems
-//            self.nearByMovieTheatres = movieNearbyArray
             //have list of nearby Locations
             
+            //Placing pins onto map
             for index in 0...movieNearbyArray.count-1{
                 let pin: mapPin = mapPin(title: movieNearbyArray[index].name!, subtitle: " ", coordinate: movieNearbyArray[index].placemark.coordinate)
                 
                 self.mapView.addAnnotation(pin)
+                
             }
             
         }
@@ -86,9 +81,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
         // Dispose of any resources that can be recreated.
     }
     
-    //parsingJSON
+    //parsingJSON-- load data in the intial view controller before Tableviews to avoid errors
     
     func parseJSON() -> Void {
+        //JSON class from SwiftyJSON
         var json:JSON
         var data:Data
         let file = "https://api.themoviedb.org/3/discover/movie?primary_release_year=2018&page=1&include_video=false&include_adult=false&sort_by=popularity.desc&language=en-US&api_key=ed74e70274d657b728a1a2d317eef7bf"

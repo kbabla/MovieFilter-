@@ -15,7 +15,7 @@ class movieDataModel{
     //genre id number
     //cooresponding Array
     
-    //seperation of movies by genre..
+    //seperation of movies by genre... for a later feature
     //28
     private var movieArrayAction: [results]
     //878
@@ -104,6 +104,7 @@ class movieDataModel{
     
     func addJSONData(data: OverallDescription) -> Void {
         var genreName: String = " "
+        //adding data for allMovies Array
         for index in 0...data.results.count-1{
             if data.results[index].genre_ids[0] == 28 {
             genreName = "Action"
@@ -137,6 +138,7 @@ class movieDataModel{
     
         }
         
+        //adding data to genre specific arrays
         for index in 0...data.results.count-1{
             //print(todo.results[index].genre_ids[0])
             if data.results[index].genre_ids[0] == 28 {

@@ -9,7 +9,7 @@
 //Class used for the Maps view.  holds the relevant information for an MKAnnotation, which is essentially a pin drop on the map with the relevant data like location, name, etc.
 import Foundation
 import MapKit
-//class for pin annonation!
+//class for pin annonation, from MKAnnotation!
 class mapPin : NSObject, MKAnnotation{
     var title: String?
     var subtitle: String?
