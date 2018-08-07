@@ -66,6 +66,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
             
             //Placing pins onto map
             for index in 0...movieNearbyArray.count-1{
+                //MKAnnotation class
                 let pin: mapPin = mapPin(title: movieNearbyArray[index].name!, subtitle: " ", coordinate: movieNearbyArray[index].placemark.coordinate)
                 
                 self.mapView.addAnnotation(pin)
