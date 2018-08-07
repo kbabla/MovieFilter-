@@ -57,8 +57,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
         let request = MKLocalSearch(request: movieTheatreLocations)
         
         //get list of search results
+        
         request.start { (response, _) in
             guard let response = response else {return}
+            
              let movieNearbyArray = response.mapItems
             //have list of nearby Locations
             
