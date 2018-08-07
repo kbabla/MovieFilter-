@@ -59,8 +59,11 @@ class DiscoveryViewController: UITableViewController {
         print("cell clicked")
         model.getMovieFromArrayToFavorites(index: indexPath.row)
         print(model.favoriteSize())
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         
     }
+  
     
     
    
