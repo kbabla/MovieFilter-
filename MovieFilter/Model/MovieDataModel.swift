@@ -76,6 +76,7 @@ class movieDataModel{
         
     }
 
+    //Combine movieTitle and movieGenre into one function return result instead of seperate string 
     
     func Subtitle(index: Int) -> String {
         return movieArrayAction[index].release_date

@@ -13,6 +13,7 @@ import SwiftyJSON
 
 class MapViewController: UIViewController, CLLocationManagerDelegate  {
 
+    
     @IBOutlet weak var mapView: MKMapView!
      let locationManager = CLLocationManager()
     
@@ -24,8 +25,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
     
      let model: movieDataModel = movieDataModel.singleton
     override func viewDidLoad() {
-        parseJSON()
+        let start = Date()
+         DispatchQueue.global(qos: .userInitiated).async {
+            self.parseJSON()
+        }
+        
         super.viewDidLoad()
+        let end = Date()
+        print(end.timeIntervalSince(start))
         //conform to CLLocationMangerDelegate
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
@@ -37,7 +44,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
        
     
         //allow for user location to appear
-        mapView.showsUserLocation = true
+        //mapView.showsUserLocation = true
         // Do any additional setup after loading the view.
     }
     
@@ -88,23 +95,29 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
     
     func parseJSON() -> Void {
         //JSON class from SwiftyJSON
+        
+            
+        
         var json:JSON
         var data:Data
         let file = "https://api.themoviedb.org/3/discover/movie?primary_release_year=2018&page=1&include_video=false&include_adult=false&sort_by=popularity.desc&language=en-US&api_key=ed74e70274d657b728a1a2d317eef7bf"
         let url = URL(string: file)
         
         do{
+           
             data = try Data(contentsOf: url!)
             
             json = try JSON(data: data)
             let decoder = JSONDecoder()
-        
+            //decoder.dataDecodingStrategy (for camel case)
+            
             
         do{
             let todo = try decoder.decode(OverallDescription.self, from: data)
             model.addJSONData(data: todo)
+            
         }
-        
+            
         catch{
             print(error)
         }
@@ -115,6 +128,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
         }
         
     }
+    
+    
     
 
     /*
