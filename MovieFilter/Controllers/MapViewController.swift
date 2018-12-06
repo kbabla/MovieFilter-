@@ -96,8 +96,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
         let AUTHORIZATION_HEADER_GET_REQUEST : HTTPHeaders = ["Authorization":"Bearer " + twitterAccessToken]
         let TWITTER_API_GET = "https://api.twitter.com/1.1/search/tweets.json"
         var query = "Creed II"
-        
-       let base641 = data1!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         getTweets(url: TWITTER_API_GET, q: ["q" : query, "lang" : "en"], header: AUTHORIZATION_HEADER_GET_REQUEST)
         
         
