@@ -10,8 +10,13 @@ import UIKit
 import CoreLocation
 import MapKit
 import SwiftyJSON
+import Alamofire
 
 class MapViewController: UIViewController, CLLocationManagerDelegate  {
+    let OAUTH2_API_TWITTER = "https://api.twitter.com/oauth2/token"
+    let TWITTER_API_KEY_SECRETKEY_COMBINED = "0k9nyU7iT92QuErdhjTEu1KaZ:57C4HyXDypoyvU6g6wOTgz3pEP0GnNudeIxCF5XloTHxi0ZMYl"
+    let OUTH2_PARAMETERS : Parameters = ["grant_type" : "client_credentials"]
+
 
     
     @IBOutlet weak var mapView: MKMapView!
@@ -25,10 +30,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
     
      let model: movieDataModel = movieDataModel.singleton
     override func viewDidLoad() {
+        let data = (TWITTER_API_KEY_SECRETKEY_COMBINED).data(using: String.Encoding.utf8)
+        let base64 = data!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+         let AUTHORIZATION_HEADER : HTTPHeaders = ["Authorization" : "Basic " + base64, "Content-Type" : "application/x-www-form-urlencoded;charset=UTF-8." ]
         let start = Date()
          DispatchQueue.global(qos: .userInitiated).async {
             self.parseJSON()
         }
+       
+        test(url: OAUTH2_API_TWITTER, parameters: OUTH2_PARAMETERS , headers: AUTHORIZATION_HEADER)
+        
+        
+        
         
         super.viewDidLoad()
         let end = Date()
@@ -47,6 +60,43 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
         //mapView.showsUserLocation = true
         // Do any additional setup after loading the view.
     }
+    
+//    func getTwitterToken(url: String, AuthorizationHeaders: HTTPHeaders){
+//
+//        Alamofire.request(url, method: .get, header: AuthorizationHeaders).responseJSON{
+//            response in
+//            if response.result.isSuccess{
+//
+//            }
+//            else{
+//
+//            }
+//        }
+//    }
+    
+    func test (url: String, parameters: Parameters, headers: HTTPHeaders){
+        
+//      Alamofire.request(OAUTH2_API_TWITTER, method: .post, parameters: , encoding: .httpbody, headers: AUTHORIZATION_HEADER )
+        
+//        Alamofire.request(url, method: .post, parameters: parameters, encoding: .httpbody, headers: headers).JSONrequest{
+//
+//        }
+        
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: URLEncoding.httpBody, headers: headers).responseJSON {
+            
+            response in
+            if response.result.isSuccess{
+                print("maybe worked?:")
+            let data = JSON(response.data)
+                print(data)
+            }
+            else{
+               print("tested failed")
+                print(response.error)
+            }
+        }
+    }
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //Setting up where the map is in terms of location and scale
@@ -90,6 +140,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+   
+    
+//    func twitterAPI(url: String, parameters: ){
+//        Alamofire.request(url, method: .get, parameters: parameters).responseJSON{
+//            response in
+//            if response.result.isSuccess{
+//
+//            }
+//            else{
+//
+//            }
+//        }
+//    }
     
     //parsingJSON-- load data in the intial view controller before Tableviews to avoid errors
     
