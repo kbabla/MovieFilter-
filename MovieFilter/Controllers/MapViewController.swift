@@ -29,14 +29,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
 
     
      let model: movieDataModel = movieDataModel.singleton
-    
+     var parsedTweet :Tweet? = nil
     
     override func viewDidLoad() {
         let data = (TWITTER_API_KEY_SECRETKEY_COMBINED).data(using: String.Encoding.utf8)
         let base64 = data!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         let AUTHORIZATION_HEADER_ACCESS_TOKEN : HTTPHeaders = ["authorization" : "Basic " + base64, "Content-Type" : "application/x-www-form-urlencoded;charset=UTF-8." ]
         
-                getTwitterAccessToken(url: OAUTH2_API_TWITTER, parameters: OUTH2_PARAMETERS , headers: AUTHORIZATION_HEADER_ACCESS_TOKEN)
+        getTwitterAccessToken(url: OAUTH2_API_TWITTER, parameters: OUTH2_PARAMETERS , headers: AUTHORIZATION_HEADER_ACCESS_TOKEN)
         
         
         let start = Date()
@@ -110,17 +110,32 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
             if response.result.isSuccess{
                 print("is success!")
                 let data = JSON(response.data)
-              print(data)
+                self.parseTwitterJSON(data: response.data!)
                 
             }
             else{
                 print(response.error)
             }
         }
-        
-        
-        
-        
+       
+    }
+    
+    
+    func parseTwitterJSON(data : Data){
+    do{
+    let decoder = JSONDecoder()
+    let todo = try decoder.decode(Tweet.self, from: data)
+    parsedTweet = todo
+        print("tweet JSON parsed!")
+         print(parsedTweet?.statuses?.count)
+      }
+    catch{
+    print(error)
+    
+ 
+       
+    }
+    
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
